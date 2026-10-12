@@ -51,3 +51,9 @@ Always review the generated file before importing. The app requests confirmation
 - Keep dated evidence entries separate from skill status
 - Make progress view more visually polished and customizable
 - Upgrade from localStorage to IndexedDB if storage needs grow
+
+## Preview test checklist
+- Confirm the header shows V0.2 on the Cloudflare preview URL.
+- Record evidence against a Unit 1 skill, reload, and verify the change persists.
+- Export a backup before importing or resetting any local records.
+- Remember that the Cloudflare preview has separate browser storage from GitHub Pages.
