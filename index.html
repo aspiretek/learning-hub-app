@@ -81,7 +81,7 @@ function renderIntake(){
  });
 }
 $('intakePick').onclick=()=>$('intakeFile').click();
-$('intakeTemplate').onclick=()=>download({schema:INTAKE_SCHEMA,id:'assessment-2026-10-16-example',date:'2026-10-16',title:'Example worksheet title',summary:'Analysis summary. Include support level and accuracy when known.',source_url:'https://drive.google.com/file/d/REPLACE_WITH_FILE_ID/view',source_title:'Original completed worksheet.pdf',observations:['What went well','What needs practice'],proposals:[{skill_id:'factors',suggested_status:'developing',rationale:'Explain the independent evidence for this recommendation.'}]},'assessment-intake-template.json');
+$('intakeTemplate').onclick=()=>download({schema:INTAKE_SCHEMA,id:'assessment-2026-10-16-example',date:'2026-10-16',title:'Example worksheet title',summary:'Analysis summary. Include support level and accuracy when known.',source_url:'PASTE_GOOGLE_DRIVE_URL_HERE',source_title:'Original completed worksheet.pdf',observations:['What went well','What needs practice'],proposals:[{skill_id:'factors',suggested_status:'developing',rationale:'Explain the independent evidence for this recommendation.'}]},'assessment-intake-template.json');
 $('intakeFile').onchange=async e=>{
  const file=e.target.files?.[0];if(!file)return;
  try{
