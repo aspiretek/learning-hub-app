@@ -48,8 +48,9 @@
 .lesson-teacher-guide-link:focus-visible{outline:2px solid #596cc0;border-radius:3px}
 @media(max-width:530px){.lesson-name-and-guide{gap:2px 8px}.lesson-teacher-guide-link{font-size:10px}}
 .section-assessment-panel{background:#f7f9fd;border-left:6px solid #91abd1;border-top:1px solid #d9e2f1;padding:0 14px}.section-assessment-trigger{cursor:pointer;padding:11px 2px;color:#475a79;font-weight:750;font-size:12px;list-style:revert}.section-assessment-trigger:focus-visible{outline:2px solid #6980bd;outline-offset:2px}.section-assessment-content{padding:2px 3px 14px;display:grid;gap:10px}.section-assessment-label{font-weight:850;color:#253b57;font-size:12px}.section-goal-list{margin:0;padding-left:23px;font-size:12px;color:#40506b;line-height:1.6}.section-goal-list li+li{margin-top:3px}.section-resource-links{display:flex;flex-wrap:wrap;gap:6px 18px;padding:8px 10px;background:#edf2fa;border-radius:8px}.section-resource-links .lesson-teacher-guide-link{font-size:12px}.section-evidence{display:grid;gap:6px}.section-evidence-entry{border:1px solid #e0e4ed;border-radius:8px;background:#fff;padding:9px 12px;display:grid;gap:4px}.section-evidence-title{font-weight:750;font-size:12px}.section-evidence-summary{font-size:12px;color:#64718a;line-height:1.45}.section-assessment-footnote{font-size:11px;color:#68768c;margin:2px 0 0}
+.section-evidence-entry{min-width:0;overflow-wrap:anywhere}.section-evidence-summary{white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;line-height:1.55;max-width:100%;font-size:12.5px}.section-evidence-observations{margin:1px 0 4px;padding-left:21px;font-size:12px;line-height:1.55;color:#536682;overflow-wrap:anywhere}.section-evidence-observations li+li{margin-top:5px}.section-assessment-content,.section-evidence{min-width:0}
 </style></head><body><div class="wrap safe">
-<header><div class="logo"><span aria-hidden="true">🌷</span><div><h1 class="title">Lille's Learning Hub</h1><div class="small">Fourth-grade learning journey · Private cloud edition</div></div></div><span class="chip">V0.21</span></header>
+<header><div class="logo"><span aria-hidden="true">🌷</span><div><h1 class="title">Lille's Learning Hub</h1><div class="small">Fourth-grade learning journey · Private cloud edition</div></div></div><span class="chip">V0.22</span></header>
 <nav class="tabs" aria-label="Main views"><button data-tab="world" class="active">🌸 My World</button><button data-tab="week">📅 My Week</button></nav>
 <main>
 <section id="world"><div class="card soft stack"><div class="row"><div><div class="dots">✦ ✦ ✦</div><h2>Look how you're growing!</h2><p class="muted" style="margin:7px 0 0">Every step counts, even the tricky ones.</p></div><span style="font-size:46px">🌱</span></div><div class="row"><strong>Learning activities completed</strong><strong id="completedSummary">0</strong></div><div class="progress"><div id="completedBar" style="width:0%"></div></div></div><div class="section"><div class="sectionhead"><h2>My learning village</h2><p class="muted" style="margin:5px 0">A place for all the things you're discovering.</p></div><div class="grid"><div class="card mint worldtile"><span class="emoji">🌿</span><strong>Math Garden</strong><div class="small" id="mathSummary"></div></div><div class="card lav worldtile"><span class="emoji">📚</span><strong>Story Cottage</strong><div class="small">Reading & writing</div></div><div class="card yellow worldtile"><span class="emoji">🏰</span><strong>History Hills</strong><div class="small">Explore the past</div></div><div class="card soft worldtile"><span class="emoji">⭐</span><strong>My Milestones</strong><div class="small" id="milestoneSummary">Your journey is starting!</div></div></div></div><div class="section card stack"><h2>Coming up</h2><div id="upcomingWorld"></div></div></section>
@@ -330,7 +331,15 @@ function makeSectionAssessmentPanel(unitName,sectionName,lessons){
    const item=element('div',undefined,'section-evidence-entry');
    const label=element('div',(h.date||'Undated')+' · '+(h.title||'Assessment'),'section-evidence-title');item.append(label);
    const note=String(h.result||'').trim();
-   if(note)item.append(element('div',note.slice(0,230)+(note.length>230?'…':''),'section-evidence-summary'));
+   if(note)item.append(element('div',note,'section-evidence-summary'));
+   const observations=Array.isArray(h.observations)?h.observations.filter(v=>typeof v==='string'&&v.trim()):[];
+   if(observations.length){
+    const label=element('div','Recorded observations','section-assessment-label');
+    item.append(label);
+    const list=element('ul',undefined,'section-evidence-observations');
+    observations.forEach(v=>list.append(element('li',v)));
+    item.append(list);
+   }
    if(safeDriveUrl(h.source_url))addEvidenceLink(item,h.source_url);
    evidence.append(item);
   });
