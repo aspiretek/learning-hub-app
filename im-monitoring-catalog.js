@@ -235,6 +235,7 @@ const IM_MONITORING_CATALOG=[
     ]
   ]
 ];
+const IM_MONITORING_SOURCE_URLS=["https://drive.google.com/file/d/1C0xRHeAaBp-ElU2jOElFlHAHCJL6mzdk/view","https://drive.google.com/file/d/1Hwf4DT25pbNP6YOZlZz0upQSkRdGXy2w/view","https://drive.google.com/file/d/1hHQhxwnl3HlKT_FsRK4XQmrBYFtfphk8/view","https://drive.google.com/file/d/1Z7e5FFSDGt5WIsHxolt2j8vQXUAygnj8/view","https://drive.google.com/file/d/1T2965C3_-QenNTBp0X1Cc3iipShleQpX/view","https://drive.google.com/file/d/1kXv1W4k-vttVZy4d3S_rd5_LJvR-oTIZ/view","https://drive.google.com/file/d/1H7YqAg7tcx9LxRDev8x2XkY-Gye_Mqrl/view","https://drive.google.com/file/d/1db7LHZxps5zmNFr4iXhzLKlrtMLK6o_3/view","https://drive.google.com/file/d/1y0fBibjHEt_Uo-n-sm8wJR4BN9aFbOWw/view"];
 const IM_LEGACY_GOAL_MAP={
   prime:'im-u1-a-1',factors:'im-u1-b-1',multiples:'im-u1-b-1',
   equiv:'im-u2-b-1',compare:'im-u2-c-1',numberline:'im-u2-a-2',
@@ -248,7 +249,7 @@ function makeOfficialGoals(){
        name:goal,subject:'Math',unit:'Unit '+(ui+1)+' · '+unitTitle,
        section:'Section '+String.fromCharCode(65+si)+' · '+sectionTitle,
        status:'not-assessed',note:'Not yet assessed against this official IM monitoring goal.',
-       kind:'im-monitoring-goal',curriculumSource:'IM Grade 4 Monitoring Sheet, Unit '+(ui+1)+', Section '+String.fromCharCode(65+si)
+       kind:'im-monitoring-goal',curriculumSource:IM_MONITORING_SOURCE_URLS[ui]
      }))
    )
  );
