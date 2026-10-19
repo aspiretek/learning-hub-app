@@ -132,7 +132,7 @@ const IM_MONITORING_CATALOG=[
     ]
   ],
   [
-    "Multi-Digit Operations",
+    "Multiplying and Dividing Multi-digit Numbers",
     [
       [
         "Features of Patterns",
@@ -188,7 +188,7 @@ const IM_MONITORING_CATALOG=[
     ]
   ],
   [
-    "Properties of Two-Dimensional Shapes",
+    "Properties of Two-dimensional Shapes",
     [
       [
         "Side Lengths, Angles, and Lines of Symmetry",
