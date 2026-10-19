@@ -30,7 +30,12 @@ export async function onRequestPost({request,env}){
    if(!state?.data_json)return json({error:'Initialize cloud progress in Parent Dashboard first'},409);
    const obj=JSON.parse(state.data_json);
    if(obj.schema!=='lille-hub-v1'||!Array.isArray(obj.history)||!Array.isArray(obj.skills)||!Array.isArray(obj.tasks))return json({error:'Invalid hub state'},503);
-   if(!validAssessment(a,obj.skills))return json({error:'Invalid assessment or unknown skill identifier'},400);
+   // Support older ChatGPT assessment JSON that still references archived custom IDs.
+   if(obj.curriculum_alignment?.version==='im-monitoring-v1'&&Array.isArray(a?.proposals)){
+    const alias={prime:'im-u1-a-1',factors:'im-u1-b-1',multiples:'im-u1-b-1',equiv:'im-u2-b-1',compare:'im-u2-c-1',numberline:'im-u2-a-2',fractionmodels:'im-u2-a-1',add:'im-u3-b-3',subtract:'im-u3-b-3'};
+    a.proposals=a.proposals.map(p=>({...p,skill_id:alias[p.skill_id]||p.skill_id}));
+   }
+   if(!validAssessment(a,obj.skills))return json({error:'Invalid assessment or unknown official IM goal'},400);
    if((obj.assessment_inbox||[]).some(x=>x.id===a.id)||obj.history.some(h=>h.assessment_id===a.id))return json({ok:true,duplicate:true,revision:state.revision,assessment_id:a.id});
    if(obj.history.length>=10000||(obj.assessment_inbox||[]).length>=5000)return json({error:'Archive full'},413);
    const stamp=new Date().toISOString();
