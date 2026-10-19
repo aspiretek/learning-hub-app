@@ -7,6 +7,7 @@
 /* V0.15: compact, information-dense Parent Dashboard */
 .parent-skill-card{gap:11px}.parent-skill-head{display:flex;justify-content:space-between;gap:15px;align-items:center}.parent-skill-head h2{font-size:19px}.parent-skill-head p{margin:5px 0 0}.compact-overview{padding:10px 12px!important;line-height:1.45}.skill-toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:space-between}.skill-toolbar .subnav{margin:0;display:flex;flex-wrap:wrap;gap:5px}.skill-toolbar .subnav button{font-size:12px;padding:6px 10px}.skill-search-label{flex:1;min-width:155px;max-width:245px}.skill-search-label input{font-size:13px;padding:9px 12px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.skill-ledger{border:1px solid #e8e6ef;border-radius:13px;overflow:hidden}.ledger-group+.ledger-group{border-top:1px solid #dedfeb}.ledger-group-head{display:flex;align-items:center;justify-content:space-between;gap:15px;background:#f6f5fa;padding:10px 13px}.ledger-group-title{font-size:13px;font-weight:800;color:#33425c;max-width:58%}.ledger-group-head .mastery-summary{max-width:210px;margin:0}.ledger-group-head .mastery-progress{height:6px}.ledger-group-head .mastery-stats{font-size:10px;text-align:right}.ledger-group-head .mastery-label{font-size:10px}.ledger-row{display:grid;grid-template-columns:minmax(0,1fr) 156px 68px;align-items:center;column-gap:12px;padding:9px 12px;border-top:1px solid #f0edf3;min-height:53px}.ledger-row:nth-child(even){background:#fcfbfd}.ledger-subject{min-width:0}.ledger-subject strong{display:block;color:#253652;font-size:13px;line-height:1.3}.ledger-note{color:#7b8292;font-size:11px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ledger-rating{width:100%;background:#fff;border:1px solid #dfe1e9;border-left:4px solid var(--rating-color,#a7adb8);padding:8px 5px;border-radius:8px;font-weight:700;font-size:12px;color:#35425b}.ledger-details{font-size:11px!important;padding:8px 5px!important}.mastery-legend{margin:0!important}
 @media(max-width:520px){.ledger-group-head{gap:8px;padding:9px}.ledger-group-title{font-size:12px}.ledger-group-head .mastery-summary{max-width:140px}.ledger-row{grid-template-columns:minmax(0,1fr) 120px 47px;gap:6px;padding:9px 7px}.ledger-subject strong{font-size:12px}.ledger-rating{font-size:11px;padding:7px 2px}.ledger-details{font-size:10px!important;padding:7px 3px!important}.ledger-note{font-size:10px}.skill-search-label{max-width:none}.parent-skill-head h2{font-size:18px}}
+.ledger-source-link{font-size:11px;white-space:nowrap;text-decoration:underline;color:#65519d;margin-left:6px}.ledger-group-head{flex-wrap:wrap}.ledger-group-title{flex:1 1 180px}.ledger-group-head .mastery-summary{flex:0 1 210px}@media(max-width:600px){.ledger-group-head .mastery-summary{order:3;max-width:none;width:100%}.ledger-source-link{margin-left:auto}}
 </style></head><body><div class="wrap safe">
 <header><div class="logo"><span aria-hidden="true">🌷</span><div><h1 class="title">Lille's Learning Hub</h1><div class="small">Fourth-grade learning journey · Private cloud edition</div></div></div><span class="chip">V0.16</span></header>
 <nav class="tabs" aria-label="Main views"><button data-tab="world" class="active">🌸 My World</button><button data-tab="week">📅 My Week</button></nav>
@@ -186,7 +187,13 @@ groups.forEach(group=>{
  const section=element('section',undefined,'ledger-group');
  const head=element('div',undefined,'ledger-group-head');
  const ttl=element('div',group,'ledger-group-title');
- head.append(ttl,makeMasterySummary(subset));section.append(head);
+ head.append(ttl,makeMasterySummary(subset));
+const sourceUrl=subset[0]?.curriculumSource;
+if(safeDriveUrl(sourceUrl)){
+ const link=element('a','Source PDF ↗','ledger-source-link');
+ link.href=sourceUrl;link.target='_blank';link.rel='noopener noreferrer';link.title='Official IM unit monitoring sheet';head.append(link);
+}
+section.append(head);
  const grid=element('div',undefined,'ledger-rows');
  subset.forEach(skill=>{
   const status=levels[skill.status]||levels['not-assessed'];
