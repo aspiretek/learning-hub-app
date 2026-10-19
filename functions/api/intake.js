@@ -4,9 +4,9 @@
 const json=(value,status=200)=>new Response(JSON.stringify(value),{status,headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});
 const allowed=['not-assessed','needs-practice','developing','proficient','mastered'];
 function safeDriveUrl(s){if(typeof s!=='string')return false;try{const u=new URL(s);return u.protocol==='https:'&&['drive.google.com','docs.google.com'].includes(u.hostname)}catch{return false}}
-function validAssessment(a,skills){
+function validAssessment(a,skills,allowReview=false){
  if(!a||a.schema!=='lille-assessment-v1'||!/^[-a-zA-Z0-9_]{8,100}$/.test(a.id||'')||!/^\d{4}-\d{2}-\d{2}$/.test(a.date||'')||typeof a.title!=='string'||!a.title.trim()||a.title.length>180||typeof a.summary!=='string'||a.summary.length>3000||!safeDriveUrl(a.source_url)||typeof a.source_title!=='string'||!a.source_title.trim()||a.source_title.length>180||!Array.isArray(a.observations)||a.observations.length>30||a.observations.some(x=>typeof x!=='string'||x.length>500)||!Array.isArray(a.proposals)||a.proposals.length>30)return false;
- return a.proposals.every(p=>p&&typeof p.skill_id==='string'&&skills.some(s=>s.id===p.skill_id)&&allowed.includes(p.suggested_status)&&typeof p.rationale==='string'&&!!p.rationale.trim()&&p.rationale.length<=1200);
+ return a.proposals.every(p=>p&&typeof p.skill_id==='string'&&(skills.some(s=>s.id===p.skill_id)||(allowReview&&p.decision==='needs-lesson-review'&&typeof p.original_skill_id==='string'&&p.original_skill_id===p.skill_id))&&allowed.includes(p.suggested_status)&&typeof p.rationale==='string'&&!!p.rationale.trim()&&p.rationale.length<=1200);
 }
 function equalSecret(a,b){
  const x=new TextEncoder().encode(a),y=new TextEncoder().encode(b);
@@ -35,11 +35,20 @@ export async function onRequestPost({request,env}){
     const alias={prime:'im-u1-a-1',factors:'im-u1-b-1',multiples:'im-u1-b-1',equiv:'im-u2-b-1',compare:'im-u2-c-1',numberline:'im-u2-a-2',fractionmodels:'im-u2-a-1',add:'im-u3-b-3',subtract:'im-u3-b-3'};
     a.proposals=a.proposals.map(p=>({...p,skill_id:alias[p.skill_id]||p.skill_id}));
    }
-   if(!validAssessment(a,obj.skills))return json({error:'Invalid assessment or unknown official IM goal'},400);
+   // Preserve historical goal-level proposals as review-needed evidence when
+   // the hub tracks lessons. Never guess which lesson a broad goal means.
+   if(obj.curriculum_alignment?.version==='im-lessons-v1'&&Array.isArray(a?.proposals)){
+     const lessonIDs=new Set(obj.skills.map(s=>s.id));
+     a.proposals=a.proposals.map(p=>{
+       if(lessonIDs.has(p.skill_id))return p;
+       return {...p,original_skill_id:p.skill_id,decision:'needs-lesson-review'};
+     });
+   }
+   if(!validAssessment(a,obj.skills,obj.curriculum_alignment?.version==='im-lessons-v1'))return json({error:'Invalid assessment or unknown lesson'},400);
    if((obj.assessment_inbox||[]).some(x=>x.id===a.id)||obj.history.some(h=>h.assessment_id===a.id))return json({ok:true,duplicate:true,revision:state.revision,assessment_id:a.id});
    if(obj.history.length>=10000||(obj.assessment_inbox||[]).length>=5000)return json({error:'Archive full'},413);
    const stamp=new Date().toISOString();
-   const draft={...a,imported_at:stamp,proposals:a.proposals.map(p=>({...p,decision:'pending'}))};
+   const draft={...a,imported_at:stamp,proposals:a.proposals.map(p=>({...p,decision:p.decision==='needs-lesson-review'?'needs-lesson-review':'pending'}))};
    obj.assessment_inbox=Array.isArray(obj.assessment_inbox)?obj.assessment_inbox:[];
    obj.assessment_inbox.push(draft);
    obj.history.push({assessment_id:a.id,date:a.date,title:a.title,result:a.summary.slice(0,1000),source_url:a.source_url,source_title:a.source_title,observations:a.observations});
