@@ -47,8 +47,9 @@
 .lesson-teacher-guide-link:hover{color:#3a398c}
 .lesson-teacher-guide-link:focus-visible{outline:2px solid #596cc0;border-radius:3px}
 @media(max-width:530px){.lesson-name-and-guide{gap:2px 8px}.lesson-teacher-guide-link{font-size:10px}}
+.section-assessment-panel{background:#f7f9fd;border-left:6px solid #91abd1;border-top:1px solid #d9e2f1;padding:0 14px}.section-assessment-trigger{cursor:pointer;padding:11px 2px;color:#475a79;font-weight:750;font-size:12px;list-style:revert}.section-assessment-trigger:focus-visible{outline:2px solid #6980bd;outline-offset:2px}.section-assessment-content{padding:2px 3px 14px;display:grid;gap:10px}.section-assessment-label{font-weight:850;color:#253b57;font-size:12px}.section-goal-list{margin:0;padding-left:23px;font-size:12px;color:#40506b;line-height:1.6}.section-goal-list li+li{margin-top:3px}.section-resource-links{display:flex;flex-wrap:wrap;gap:6px 18px;padding:8px 10px;background:#edf2fa;border-radius:8px}.section-resource-links .lesson-teacher-guide-link{font-size:12px}.section-evidence{display:grid;gap:6px}.section-evidence-entry{border:1px solid #e0e4ed;border-radius:8px;background:#fff;padding:9px 12px;display:grid;gap:4px}.section-evidence-title{font-weight:750;font-size:12px}.section-evidence-summary{font-size:12px;color:#64718a;line-height:1.45}.section-assessment-footnote{font-size:11px;color:#68768c;margin:2px 0 0}
 </style></head><body><div class="wrap safe">
-<header><div class="logo"><span aria-hidden="true">🌷</span><div><h1 class="title">Lille's Learning Hub</h1><div class="small">Fourth-grade learning journey · Private cloud edition</div></div></div><span class="chip">V0.20</span></header>
+<header><div class="logo"><span aria-hidden="true">🌷</span><div><h1 class="title">Lille's Learning Hub</h1><div class="small">Fourth-grade learning journey · Private cloud edition</div></div></div><span class="chip">V0.21</span></header>
 <nav class="tabs" aria-label="Main views"><button data-tab="world" class="active">🌸 My World</button><button data-tab="week">📅 My Week</button></nav>
 <main>
 <section id="world"><div class="card soft stack"><div class="row"><div><div class="dots">✦ ✦ ✦</div><h2>Look how you're growing!</h2><p class="muted" style="margin:7px 0 0">Every step counts, even the tricky ones.</p></div><span style="font-size:46px">🌱</span></div><div class="row"><strong>Learning activities completed</strong><strong id="completedSummary">0</strong></div><div class="progress"><div id="completedBar" style="width:0%"></div></div></div><div class="section"><div class="sectionhead"><h2>My learning village</h2><p class="muted" style="margin:5px 0">A place for all the things you're discovering.</p></div><div class="grid"><div class="card mint worldtile"><span class="emoji">🌿</span><strong>Math Garden</strong><div class="small" id="mathSummary"></div></div><div class="card lav worldtile"><span class="emoji">📚</span><strong>Story Cottage</strong><div class="small">Reading & writing</div></div><div class="card yellow worldtile"><span class="emoji">🏰</span><strong>History Hills</strong><div class="small">Explore the past</div></div><div class="card soft worldtile"><span class="emoji">⭐</span><strong>My Milestones</strong><div class="small" id="milestoneSummary">Your journey is starting!</div></div></div></div><div class="section card stack"><h2>Coming up</h2><div id="upcomingWorld"></div></div></section>
@@ -58,6 +59,7 @@
 <dialog id="skillDetailDialog" aria-labelledby="skillDetailTitle"><h2 id="skillDetailTitle"></h2><p id="skillDetailStatus" style="font-weight:750"></p><div class="card" style="box-shadow:none"><strong>Assessment notes</strong><ul id="skillDetailNote" style="line-height:1.6;font-size:14px;padding-left:22px;margin:14px 0 0;display:grid;gap:9px"></ul></div><div style="margin-top:12px"><strong>School focus</strong><p class="small">Highlights from newsletters and schoolwork; independent of mastery.</p><div id="schoolFocusChips" style="display:flex;gap:7px;flex-wrap:wrap"></div></div><div class="actions" style="margin-top:14px"><button class="btn secondary" id="closeSkillDetail">Close</button><button class="btn" id="editSkillDetail">Record evidence</button></div></dialog><dialog id="evidenceDialog"><h2 id="evidenceHeading">Record evidence</h2><p class="small">Note the worksheet, result, date, and whether the work was independent.</p><label class="label" for="evidenceStatus">Skill status</label><select id="evidenceStatus" class="field"><option value="not-assessed">Not assessed</option><option value="needs-practice">Needs practice</option><option value="developing">Developing</option><option value="proficient">Proficient</option><option value="mastered">Mastered</option></select><label class="label" for="evidenceNote" style="margin-top:14px">Evidence or observation</label><textarea id="evidenceNote" class="field" rows="4" maxlength="1000"></textarea><label class="label" for="evidenceSourceUrl" style="margin-top:12px">Original PDF link (optional)</label><input id="evidenceSourceUrl" class="field" type="url" placeholder="https://drive.google.com/file/d/.../view"><label class="label" for="evidenceSourceTitle" style="margin-top:12px">Document name (optional)</label><input id="evidenceSourceTitle" class="field" maxlength="180" placeholder="e.g. Unit 1 diagnostic scan"><div class="actions" style="margin-top:14px"><button class="btn secondary" id="cancelEvidence">Cancel</button><button class="btn" id="saveEvidence">Save evidence</button></div></dialog><dialog id="historySourceDialog" aria-labelledby="historySourceHeading"><h2 id="historySourceHeading">Assessment source</h2><p id="historySourceSummary" class="small"></p><label class="label" for="historySourceUrl">Original PDF Google Drive URL</label><input id="historySourceUrl" class="field" type="url" placeholder="https://drive.google.com/file/d/.../view"><label class="label" for="historySourceTitle" style="margin-top:12px">Document label</label><input id="historySourceTitle" class="field" maxlength="180" placeholder="Original scanned assessment"><p class="small">Adds a reference only; does not modify the original PDF.</p><div class="actions"><button class="btn secondary" id="cancelHistorySource">Cancel</button><button class="btn" id="saveHistorySource">Save source</button></div></dialog><dialog id="confirmDialog"><h2>Replace saved information?</h2><p id="confirmMessage"></p><div class="actions"><button class="btn secondary" id="cancelImport">Cancel</button><button class="btn" id="confirmImport">Continue</button></div></dialog>
 <script src="./im-monitoring-catalog.js"></script>
 <script src="./im-lesson-teacher-guide-links.js"></script>
+<script src="./im-section-assessment-links.js"></script>
 <script>
 'use strict';
 const KEY='lille-learning-hub-v01';
@@ -288,6 +290,54 @@ function drawSkill(x){
  row.append(left,sel,btn);return row;
 }
 // All units start collapsed. Track opened units across rerenders (e.g. saving a rating).
+// Official IM monitoring-sheet criteria are shown for reference, not as extra proficiency ratings.
+function makeSectionAssessmentPanel(unitName,sectionName,lessons){
+ const um=unitName.match(/^Unit ([0-9]+)/),sm=sectionName.match(/^Section ([A-Z])\s*·/);
+ if(!um||!sm)return null;
+ const un=Number(um[1]),sectionIndex=sm[1].charCodeAt(0)-65;
+ const catalog=IM_MONITORING_CATALOG[un-1],official=catalog?.[1]?.[sectionIndex];
+ if(!official)return null;
+ const key='u'+un+'-'+sm[1],refs=IM_SECTION_ASSESSMENTS[key];
+ const details=element('details',undefined,'section-assessment-panel');
+ const summary=element('summary','Section assessment · IM monitoring goals, checkpoint & evidence','section-assessment-trigger');
+ const inner=element('div',undefined,'section-assessment-content');
+ const title=element('div','Official IM monitoring goals','section-assessment-label');inner.append(title);
+ const list=element('ol',undefined,'section-goal-list');
+ official[1].forEach(goal=>list.append(element('li',goal)));
+ inner.append(list);
+ const linkRow=element('div',undefined,'section-resource-links');
+ function addLink(href,label){if(!safeDriveUrl(href))return;const a=element('a',label+' ↗','lesson-teacher-guide-link');a.href=href;a.target='_blank';a.rel='noopener noreferrer';linkRow.append(a)}
+ addLink(IM_MONITORING_SOURCE_URLS[un-1],'Monitoring sheet');
+ if(refs){addLink(refs.checkpoint,'Section checkpoint');addLink(refs.teacher_guide,'Checkpoint teacher guide')}
+ else if(un===9){addLink(IM_SECTION_ASSESSMENTS['u9-course']?.checkpoint,'End-of-course assessment');addLink(IM_SECTION_ASSESSMENTS['u9-course']?.teacher_guide,'Assessment teacher guide')}
+ else linkRow.append(element('span','No section checkpoint found in the supplied curriculum files.','small'));
+ inner.append(linkRow);
+ const evidence=element('div',undefined,'section-evidence');
+ evidence.append(element('div','Lille’s recorded evidence','section-assessment-label'));
+ // Match only records explicitly labeled with this unit AND section.
+ // A general unit result or a math skill keyword alone is not proof of section alignment.
+ const evidencePattern=new RegExp('\\b(?:unit\\s*'+un+'\\s*[,.:–—-]?\\s*(?:section|sec\\.?|s)\\s*'+sm[1]+'|u'+un+'\\s*[-_ ]?\\s*(?:section|sec\\.?|s)\\s*'+sm[1]+')\\b','i');
+ const matches=(data.history||[]).filter(h=>{
+   if(!h||typeof h!=='object')return false;
+   return evidencePattern.test(String(h.title||'')+' '+String(h.result||''));
+ }).slice(-8).reverse();
+ if(matches.length){
+  matches.forEach(h=>{
+   const item=element('div',undefined,'section-evidence-entry');
+   const label=element('div',(h.date||'Undated')+' · '+(h.title||'Assessment'),'section-evidence-title');item.append(label);
+   const note=String(h.result||'').trim();
+   if(note)item.append(element('div',note.slice(0,230)+(note.length>230?'…':''),'section-evidence-summary'));
+   if(safeDriveUrl(h.source_url))addEvidenceLink(item,h.source_url);
+   evidence.append(item);
+  });
+ }else evidence.append(element('p','No section-labeled assessment has been linked yet. Earlier work remains in Academic Record; nothing here changes a lesson rating.','small'));
+ inner.append(evidence);
+ inner.append(element('p','Monitoring goals describe section-level learning. Lesson ratings still control the green Section and Unit progress bars. Checkpoint results are evidence, not automatic mastery changes.','section-assessment-footnote'));
+ details.append(summary,inner);
+ return details;
+}
+function addEvidenceLink(target,url){const a=element('a','Original assessment PDF ↗','lesson-teacher-guide-link');a.href=url;a.rel='noopener noreferrer';a.target='_blank';target.append(a)}
+
 const groups=[...new Set(visible.map(x=>x.unit||x.subject))];
 for(const group of groups){
  const all=data.skills.filter(x=>(x.unit||x.subject)===group),filtered=visible.filter(x=>(x.unit||x.subject)===group);
@@ -317,6 +367,7 @@ for(const group of groups){
    const secAll=all.filter(x=>(x.section||'Other lessons')===sec),secVisible=filtered.filter(x=>(x.section||'Other lessons')===sec);
    const sh=element('div',undefined,'ledger-section-head');sh.classList.add(progress(secAll).green?'rollup-green':'rollup-pending');
    sh.append(element('strong',sec),rollupVisual(secAll));body.append(sh);
+   const panel=makeSectionAssessmentPanel(group,sec,secAll);if(panel)body.append(panel);
    const rows=element('div',undefined,'ledger-rows');secVisible.forEach(x=>rows.append(drawSkill(x)));body.append(rows);
   }
  }else{const rows=element('div',undefined,'ledger-rows');filtered.forEach(x=>rows.append(drawSkill(x)));body.append(rows)}
