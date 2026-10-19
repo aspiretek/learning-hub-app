@@ -9,8 +9,29 @@
 @media(max-width:520px){.ledger-group-head{gap:8px;padding:9px}.ledger-group-title{font-size:12px}.ledger-group-head .mastery-summary{max-width:140px}.ledger-row{grid-template-columns:minmax(0,1fr) 120px 47px;gap:6px;padding:9px 7px}.ledger-subject strong{font-size:12px}.ledger-rating{font-size:11px;padding:7px 2px}.ledger-details{font-size:10px!important;padding:7px 3px!important}.ledger-note{font-size:10px}.skill-search-label{max-width:none}.parent-skill-head h2{font-size:18px}}
 .ledger-source-link{font-size:11px;white-space:nowrap;text-decoration:underline;color:#65519d;margin-left:6px}.ledger-group-head{flex-wrap:wrap}.ledger-group-title{flex:1 1 180px}.ledger-group-head .mastery-summary{flex:0 1 210px}@media(max-width:600px){.ledger-group-head .mastery-summary{order:3;max-width:none;width:100%}.ledger-source-link{margin-left:auto}}
 .ledger-section-head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 13px;background:#edeff6;border-top:1px solid #dce0e9;color:#293956;font-size:12px}.ledger-section-head strong{font-size:12px}.rollup-badge{white-space:nowrap;background:#f1f2f6;color:#657184;border:1px solid #dfe1e8;padding:5px 9px;border-radius:20px;font-size:11px;font-weight:750}.rollup-badge.complete{background:#d6f3e3;color:#12603f;border-color:#81d4a5}.ledger-group-head.rollup-green,.ledger-section-head.rollup-green{background:#e1f6e9}.ledger-group-head.rollup-green .ledger-group-title{color:#14603e}@media(max-width:530px){.ledger-section-head{gap:7px;flex-wrap:wrap}}
+
+/* V0.18 visual hierarchy: dark unit headers, indented section headers, colored lesson rows */
+.ledger-group+.ledger-group{border-top:14px solid #fff}
+.ledger-group-head{background:#273c5a!important;color:white!important;padding:15px!important;min-height:84px;display:grid!important;grid-template-columns:minmax(0,1fr) minmax(150px,225px) auto;gap:14px;align-items:center}
+.ledger-group-head .ledger-group-title{font-size:16px!important;line-height:1.25;color:white!important;max-width:none!important;font-weight:850}
+.ledger-group-head.rollup-green{background:#1c634c!important}
+.ledger-group-head .ledger-source-link{color:#d3e6ff!important;text-decoration:underline}
+.ledger-section-head{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(140px,210px);align-items:center;background:#e7edf6!important;border-left:6px solid #91abd1;border-top:1px solid #cdd7e4;padding:12px 15px!important;gap:12px}
+.ledger-section-head strong{font-size:13px!important;color:#2b405c;line-height:1.35}
+.ledger-section-head.rollup-green{background:#def3e7!important;border-left-color:#23845d}
+.rollup-visual{width:100%;max-width:230px;display:grid;gap:6px;min-width:0;margin-left:auto}
+.proficiency-distribution{width:100%;height:12px;display:flex;overflow:hidden;border-radius:100px;background:#9ba3b1}
+.distribution-part{height:100%;display:block}
+.rollup-bottom{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:11px}
+.rollup-count{font-weight:850}.rollup-goal{font-size:10px;opacity:.7}
+.ledger-group-head .rollup-bottom{color:white}.ledger-section-head .rollup-bottom{color:#3f5670}
+.ledger-row.colored-lesson-row{border-left:5px solid var(--row-level-color);padding-left:10px;min-height:55px}
+.ledger-row.colored-lesson-row:nth-child(even){background:#f9fafd}
+.ledger-rating{background:color-mix(in srgb,var(--rating-color) 17%,white)!important;border:1px solid var(--rating-color)!important;border-left:6px solid var(--rating-color)!important;color:#24364d!important;font-weight:850!important}
+@media(max-width:620px){.ledger-group-head{grid-template-columns:minmax(0,1fr) minmax(120px,165px);gap:8px!important;padding:11px!important}.ledger-group-head .ledger-source-link{grid-column:1/-1;margin-left:0}.ledger-section-head{grid-template-columns:minmax(0,1fr) 135px;gap:8px;padding:9px!important}.rollup-goal{display:none}.ledger-group-head .ledger-group-title{font-size:14px!important}.colored-lesson-row{padding-left:5px!important}}
+@media(max-width:390px){.ledger-group-head,.ledger-section-head{grid-template-columns:1fr!important}.rollup-visual{max-width:none}}
 </style></head><body><div class="wrap safe">
-<header><div class="logo"><span aria-hidden="true">🌷</span><div><h1 class="title">Lille's Learning Hub</h1><div class="small">Fourth-grade learning journey · Private cloud edition</div></div></div><span class="chip">V0.17</span></header>
+<header><div class="logo"><span aria-hidden="true">🌷</span><div><h1 class="title">Lille's Learning Hub</h1><div class="small">Fourth-grade learning journey · Private cloud edition</div></div></div><span class="chip">V0.18</span></header>
 <nav class="tabs" aria-label="Main views"><button data-tab="world" class="active">🌸 My World</button><button data-tab="week">📅 My Week</button></nav>
 <main>
 <section id="world"><div class="card soft stack"><div class="row"><div><div class="dots">✦ ✦ ✦</div><h2>Look how you're growing!</h2><p class="muted" style="margin:7px 0 0">Every step counts, even the tricky ones.</p></div><span style="font-size:46px">🌱</span></div><div class="row"><strong>Learning activities completed</strong><strong id="completedSummary">0</strong></div><div class="progress"><div id="completedBar" style="width:0%"></div></div></div><div class="section"><div class="sectionhead"><h2>My learning village</h2><p class="muted" style="margin:5px 0">A place for all the things you're discovering.</p></div><div class="grid"><div class="card mint worldtile"><span class="emoji">🌿</span><strong>Math Garden</strong><div class="small" id="mathSummary"></div></div><div class="card lav worldtile"><span class="emoji">📚</span><strong>Story Cottage</strong><div class="small">Reading & writing</div></div><div class="card yellow worldtile"><span class="emoji">🏰</span><strong>History Hills</strong><div class="small">Explore the past</div></div><div class="card soft worldtile"><span class="emoji">⭐</span><strong>My Milestones</strong><div class="small" id="milestoneSummary">Your journey is starting!</div></div></div></div><div class="section card stack"><h2>Coming up</h2><div id="upcomingWorld"></div></div></section>
@@ -201,12 +222,27 @@ $('skillSearch').value=skillSearchText;
 const q=skillSearchText.trim().toLowerCase();
 const visible=data.skills.filter(x=>(filter==='All'||x.subject===filter)&&(!q||[x.name,x.unit,x.section,x.note].some(v=>String(v||'').toLowerCase().includes(q))));
 $('skillCount').textContent=visible.length+' of '+data.skills.length+' lessons';
-const levels={'not-assessed':[1,'Not assessed','#818897'],'needs-practice':[2,'Needs support','#CF5555'],'developing':[3,'Developing','#BA7A12'],'proficient':[4,'Proficient','#23845D'],'mastered':[5,'Mastered','#187345']};
+const levels={'not-assessed':[1,'Not assessed','#9BA3B1'],'needs-practice':[2,'Needs support','#D85A63'],'developing':[3,'Developing','#E5A338'],'proficient':[4,'Proficient','#3785C5'],'mastered':[5,'Mastered','#258A61']};
 const meets=x=>x.status==='proficient'||x.status==='mastered';
 const progress=a=>{const count=a.filter(meets).length;return {count,total:a.length,green:a.length>0&&count===a.length}};
-function badge(a){const p=progress(a);const n=element('span',(p.green?'✓ ':'')+p.count+'/'+p.total+' proficient','rollup-badge'+(p.green?' complete':''));n.title='Green when ALL lessons are proficient (4/5) or mastered (5/5)';return n}
+function distributionBar(items){
+ const el=element('div',undefined,'proficiency-distribution');el.setAttribute('role','img');
+ const labels=['mastered','proficient','developing','needs-practice','not-assessed'];
+ el.setAttribute('aria-label',labels.map(k=>items.filter(x=>x.status===k).length+' '+levels[k][1]).join(', '));
+ labels.forEach(k=>{const n=items.filter(x=>x.status===k).length;if(!n)return;
+ const segment=element('span',undefined,'distribution-part');segment.style.width=(n/items.length*100)+'%';segment.style.background=levels[k][2];segment.title=n+' '+levels[k][1];el.append(segment)});
+ return el;
+}
+function rollupVisual(items){const p=progress(items);const wrap=element('div',undefined,'rollup-visual');
+ wrap.append(distributionBar(items));
+ const bottom=element('div',undefined,'rollup-bottom');
+ bottom.append(element('strong',(p.green?'✓ All proficient':p.count+'/'+p.total+' proficient'),'rollup-count'));
+ bottom.append(element('span',p.green?'Complete':'Goal: every lesson ≥ 4/5','rollup-goal'));
+ wrap.append(bottom);return wrap;
+}
 function drawSkill(x){
- const row=element('div',undefined,'ledger-row'),left=element('div',undefined,'ledger-subject');
+ const row=element('div',undefined,'ledger-row colored-lesson-row'),left=element('div',undefined,'ledger-subject');
+ row.style.setProperty('--row-level-color',(levels[x.status]||levels['not-assessed'])[2]);
  left.append(element('strong',x.name));
  if(x.note&&x.note!=='No lesson-specific independent assessment recorded.'){const n=element('div',x.note.slice(0,100)+(x.note.length>100?'…':''),'ledger-note');n.title=x.note;left.append(n)}
  const sel=element('select',undefined,'ledger-rating');sel.setAttribute('aria-label','Proficiency for '+x.name);
@@ -223,7 +259,7 @@ for(const group of groups){
  const all=data.skills.filter(x=>(x.unit||x.subject)===group),filtered=visible.filter(x=>(x.unit||x.subject)===group);
  const unit=element('section',undefined,'ledger-group'),head=element('div',undefined,'ledger-group-head');
  head.classList.add(progress(all).green?'rollup-green':'rollup-pending');
- head.append(element('div',group,'ledger-group-title'),badge(all));
+ head.append(element('div',group,'ledger-group-title'),rollupVisual(all));
  const source=all[0]?.curriculumSource;
  if(safeDriveUrl(source)){const link=element('a','IM source ↗','ledger-source-link');link.href=source;link.target='_blank';link.rel='noopener noreferrer';head.append(link)}
  unit.append(head);
@@ -231,7 +267,7 @@ for(const group of groups){
   for(const sec of [...new Set(filtered.map(x=>x.section||'Other lessons'))]){
    const secAll=all.filter(x=>(x.section||'Other lessons')===sec),secVisible=filtered.filter(x=>(x.section||'Other lessons')===sec);
    const sh=element('div',undefined,'ledger-section-head');sh.classList.add(progress(secAll).green?'rollup-green':'rollup-pending');
-   sh.append(element('strong',sec),badge(secAll));unit.append(sh);
+   sh.append(element('strong',sec),rollupVisual(secAll));unit.append(sh);
    const rows=element('div',undefined,'ledger-rows');secVisible.forEach(x=>rows.append(drawSkill(x)));unit.append(rows);
   }
  }else{const rows=element('div',undefined,'ledger-rows');filtered.forEach(x=>rows.append(drawSkill(x)));unit.append(rows)}
