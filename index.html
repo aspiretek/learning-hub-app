@@ -70,6 +70,7 @@ const deepCopy=v=>JSON.parse(JSON.stringify(v));
 let data;try{data=JSON.parse(localStorage.getItem(KEY));if(!valid(data))throw Error('invalid')}catch{data=deepCopy(demo)}
 let tab='world',day=0,filter='Math',pending=null,editingSkillId=null,skillSearchText='';
 const expandedUnits=new Set();
+const expandedSectionAssessments=new Set();
 const U1='Unit 1 · Factors & multiples',U2='Unit 2 · Equivalent & comparing fractions',U3='Unit 3 · Current lessons';
 const UNITS={factors:U1,prime:U1,multiples:U1,groups:U1,equiv:U2,compare:U2,numberline:U2,fractionmodels:U2,add:U3,subtract:U3};
 const EXTRA=[
@@ -299,6 +300,9 @@ function makeSectionAssessmentPanel(unitName,sectionName,lessons){
  if(!official)return null;
  const key='u'+un+'-'+sm[1],refs=IM_SECTION_ASSESSMENTS[key];
  const details=element('details',undefined,'section-assessment-panel');
+ const panelId='u'+un+'-'+sm[1];
+ details.open=expandedSectionAssessments.has(panelId);
+ details.addEventListener('toggle',()=>{if(details.open)expandedSectionAssessments.add(panelId);else expandedSectionAssessments.delete(panelId)});
  const summary=element('summary','Section assessment · IM monitoring goals, checkpoint & evidence','section-assessment-trigger');
  const inner=element('div',undefined,'section-assessment-content');
  const title=element('div','Official IM monitoring goals','section-assessment-label');inner.append(title);
