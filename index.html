@@ -266,7 +266,7 @@ function drawSkill(x){
  titleRow.append(element('strong',x.name));
  // The name includes its absolute unit lesson number, matching Drive's
  // Grade4-<unit>-<lesson>-Lesson-teacher-guide-.pdf filename convention.
- const unitNo=(x.id.match(/^im4-u(\\d+)-/)||[])[1];
+ const unitNo=(x.id.match(/^im4-u([0-9]+)-/)||[])[1];
  const lessonNo=(x.name.match(/^Lesson\s+(\d+)\s*:/)||[])[1];
  const guideUrl=(unitNo&&lessonNo&&typeof IM_LESSON_TEACHER_GUIDES!=='undefined')
    ?IM_LESSON_TEACHER_GUIDES['u'+unitNo+'-l'+lessonNo]:null;
