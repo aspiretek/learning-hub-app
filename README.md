@@ -1,6 +1,10 @@
-# Lille's Learning Hub — Local V0.1
+# Lille's Learning Hub — Local V0.2 (preview branch)
 
 A static one-file website. No accounts, database, or cloud storage for learning records.
+
+## Cloudflare preview deployment
+This branch is used to test the V0.2 mastery tracker before merging to `main`.
+Cloudflare Pages should be configured to deploy all non-production branches. A push to this branch triggers a new preview deployment while the production site continues to serve `main`.
 
 ## Publish using GitHub Pages
 1. Create a **new public repository** for the generic app code (for example `learning-hub-app`). Do **not** commit Lille's personal progress updates or backups.
@@ -13,7 +17,7 @@ A static one-file website. No accounts, database, or cloud storage for learning 
 ## Testing before real use
 - In **My Week**, check an activity and confirm the count changes.
 - Reload Safari, confirm it is still checked.
-- In **Parent View**, change a skill status and confirm it persists after reloading.
+- In **Parent View**, choose a Unit 1 or Unit 2 skill and record evidence before changing its status; confirm the academic record and saved status persist after reloading.
 - Select **Export backup** and save the JSON to Files, ideally an offline or iCloud Drive backup outside the browser.
 - Test **Import backup** to restore a previous snapshot.
 
@@ -47,3 +51,9 @@ Always review the generated file before importing. The app requests confirmation
 - Keep dated evidence entries separate from skill status
 - Make progress view more visually polished and customizable
 - Upgrade from localStorage to IndexedDB if storage needs grow
+
+## Preview test checklist
+- Confirm the header shows V0.2 on the Cloudflare preview URL.
+- Record evidence against a Unit 1 skill, reload, and verify the change persists.
+- Export a backup before importing or resetting any local records.
+- Remember that the Cloudflare preview has separate browser storage from GitHub Pages.
